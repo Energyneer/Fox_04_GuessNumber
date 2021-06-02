@@ -7,22 +7,21 @@ namespace Task4
         static void Main(string[] args)
         {
             Game game = new Game();
-            WriteMessage(2);
-            int i = -1;
+            WriteMessage(Promt.NEW_GAME);
             while (true)
             {
                 Console.Write("Enter a number between 0 and 100: ");
                 int inputValue = -1;
                 if (!InputEncoder.CheckAndParse(Console.ReadLine(), out inputValue))
                     continue;
-                int result = game.CheckNumber(inputValue);
+                Promt result = game.CheckNumber(inputValue);
                 WriteMessage(result);
-                if (result == 0)
+                if (result == Promt.EQUAL)
                 {
                     if (More())
                     {
                         game.GenerateNewNumber();
-                        WriteMessage(2);
+                        WriteMessage(Promt.NEW_GAME);
                     }
                     else
                     {
@@ -32,14 +31,14 @@ namespace Task4
             }
         }
 
-        private static void WriteMessage(int code)
+        private static void WriteMessage(Promt code)
         {
             switch (code)
             {
-                case -1: Console.WriteLine("Try more!"); break;
-                case 0: Console.WriteLine("You are winner!"); break;
-                case 1: Console.WriteLine("Try less!"); break;
-                case 2: Console.WriteLine("Start new game!"); break;
+                case Promt.LESS: Console.WriteLine("Try more!"); break;
+                case Promt.EQUAL: Console.WriteLine("You are winner!"); break;
+                case Promt.MORE: Console.WriteLine("Try less!"); break;
+                case Promt.NEW_GAME: Console.WriteLine("Start new game!"); break;
                 default: Console.WriteLine("> Error"); break;
             }
         }

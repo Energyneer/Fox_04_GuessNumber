@@ -8,11 +8,16 @@ namespace Task4
 {
     public class Game
     {
-        public int ReqNumber { get; set; }
+        private int ReqNumber { get; set; }
 
         public Game()
         {
             GenerateNewNumber();
+        }
+
+        public Game(int reqNumber)
+        {
+            ReqNumber = reqNumber;
         }
 
         public void GenerateNewNumber()
@@ -21,9 +26,17 @@ namespace Task4
             ReqNumber = random.Next(0, 101);
         }
 
-        public int CheckNumber(int proposed)
+        public Promt CheckNumber(int proposed)
         {
-            return proposed == ReqNumber ? 0 : proposed < ReqNumber ? -1 : 1;
+            return proposed == ReqNumber ? Promt.EQUAL : proposed < ReqNumber ? Promt.LESS : Promt.MORE;
         }
+    }
+
+    public enum Promt
+    {
+        LESS,
+        EQUAL,
+        MORE,
+        NEW_GAME
     }
 }

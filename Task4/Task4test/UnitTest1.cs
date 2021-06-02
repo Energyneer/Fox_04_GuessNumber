@@ -8,20 +8,14 @@ namespace Task4test
     {
         private Game game;
 
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            game = new Game();
-        }
-
         [TestMethod]
         public void TestCheckNumber()
         {
             int reqValue = 66;
-            game.ReqNumber = reqValue;
-            Assert.AreEqual(0, game.CheckNumber(reqValue));
-            Assert.AreEqual(-1, game.CheckNumber(reqValue - 1));
-            Assert.AreEqual(1, game.CheckNumber(reqValue + 1));
+            Game game = new Game(reqValue);
+            Assert.AreEqual(Promt.EQUAL, game.CheckNumber(reqValue));
+            Assert.AreEqual(Promt.LESS, game.CheckNumber(reqValue - 1));
+            Assert.AreEqual(Promt.MORE, game.CheckNumber(reqValue + 1));
         }
 
         [TestMethod]
@@ -53,12 +47,16 @@ namespace Task4test
         [TestMethod]
         public void TestGenerateValue()
         {
-            int oldValue = game.ReqNumber;
-            game.GenerateNewNumber();
-            if (game.ReqNumber == oldValue)
+            Game game = new Game();
+            int inValue = 50;
+            Promt startState = game.CheckNumber(inValue);
+            for (int i = 0; i < 10; i++)
+            {
                 game.GenerateNewNumber();
-
-            Assert.AreNotEqual(oldValue, game.ReqNumber);
+                if (startState != game.CheckNumber(inValue))
+                    break;
+            }
+            Assert.AreNotEqual(startState, game.CheckNumber(inValue));
         }
     }
 }
